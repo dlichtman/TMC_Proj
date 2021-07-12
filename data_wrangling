@@ -1,0 +1,31 @@
+import pandas as pd
+import os
+import numpy as np
+import glob
+
+#read in csvs
+
+path='C:/Users/dlich/Documents/TMC_Data'
+files=glob.glob(path +'/*.csv') #create csv collection
+print(files)
+
+dfs=[] #empty list for dataframes
+for f in files: #iterate though list of csvs
+    temp_df=pd.read_csv(f)
+    dfs.append(temp_df) #add temp dataframes to list
+
+print("Pre Transform")
+for df in dfs:
+    print(df.columns)
+
+#remove special characters from df columns, replace with blank, strip whitespace, and change col names to lower case
+print("\n Post Transform")
+for df in dfs: #iterate through list of dataframes
+    df.columns=df.columns.str.replace('[?,!,.,&,$,%, ]','').str.strip().str.lower()
+    print(df.columns)
+
+print("\n Output")
+output=pd.concat([df for df in dfs]) #merge files into one dataframe
+print(output)
+print(output.columns)
+output.to_csv(path)
