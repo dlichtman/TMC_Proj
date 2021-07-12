@@ -6,6 +6,7 @@ import glob
 #read in csvs
 
 path='C:/Users/dlich/Documents/TMC_Data'
+pathy=path
 files=glob.glob(path +'/*.csv') #create csv collection
 print(files)
 
@@ -25,7 +26,7 @@ for df in dfs: #iterate through list of dataframes
     print(df.columns)
 
 print("\n Output")
-output=pd.concat([df for df in dfs]) #merge files into one dataframe
+output=pd.concat([df for df in dfs]).reset_index(drop=True) #merge files into one dataframe
 print(output)
 print(output.columns)
-output.to_csv(path)
+output.to_csv('output_combined.csv')
